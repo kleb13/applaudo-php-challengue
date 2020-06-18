@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,10 +36,10 @@ class Handler extends ExceptionHandler
      *
      * @throws \Exception
      */
-    public function report(Throwable $exception)
+    /*public function report(Throwable $exception)
     {
         parent::report($exception);
-    }
+    }*/
 
     /**
      * Render an exception into an HTTP response.
@@ -50,6 +52,29 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if($request->wantsJson()){
+            $response = [
+                'error' => 'Something went wrong.'
+            ];
+
+            if(config('app.debug')){
+                $response['exception'] = get_class($exception);
+                $response['message'] = $exception->getMessage();
+                $response['trace'] = $exception->getTrace();
+            }
+
+            $status = 400;
+
+            if($exception instanceof AuthenticationException){
+                $status = 401;
+                $response['error'] = $exception->getMessage();
+            }
+            if($this->isHttpException($exception)){
+                $status = $exception->getStatusCode();
+            }
+
+            return new JsonResponse($response, $status);
+        }
         return parent::render($request, $exception);
     }
 }
