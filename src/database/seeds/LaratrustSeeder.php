@@ -78,11 +78,11 @@ class LaratrustSeeder extends Seeder
         DB::table('permission_user')->truncate();
         DB::table('role_user')->truncate();
         if(Config::get('laratrust_seeder.truncate_tables')) {
-            \App\Role::truncate();
-            \App\Permission::truncate();
+            \App\Models\Role::truncate();
+            \App\Models\Permission::truncate();
         }
         if(Config::get('laratrust_seeder.truncate_tables') && Config::get('laratrust_seeder.create_users')) {
-            \App\User::truncate();
+            \App\Models\User::truncate();
         }
         Schema::enableForeignKeyConstraints();
     }
