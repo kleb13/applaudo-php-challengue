@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -16,6 +16,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+    protected $apiNamespace = 'App\Http\Controllers\Api';
+
     /**
      * The path to the "home" route for your application.
      *
@@ -23,6 +25,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    /**
+     * @var Router
+     */
+    protected $router;
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -38,10 +44,13 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
+     * @param Router $router
      * @return void
      */
-    public function map()
+    public function map(Router $router)
     {
+        $this->router = $router;
+
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
@@ -58,9 +67,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/web.php'));
+        $this->router
+            ->group([
+                'namespace' => $this->namespace,
+                'middleware' => 'web'
+            ],function(Router $router){
+                require base_path('routes/web.php');
+            });
     }
 
     /**
@@ -72,9 +85,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+        $this->router
+            ->group([
+                'namespace' => $this->apiNamespace,
+                'prefix' => 'api',
+                'middleware' => 'api'
+            ],function(Router $router){
+                require base_path('routes/api.php');
+            });
     }
 }
