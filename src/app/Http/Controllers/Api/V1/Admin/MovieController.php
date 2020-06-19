@@ -3,83 +3,82 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MovieRequest;
+use App\Http\Resources\MovieCollection;
+use App\Models\MovieImage;
+use App\Models\Movie;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    protected $movies;
+
+    public function __construct(Movie $movies)
     {
-        //
+        $this->movies = $movies;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return MovieCollection
      */
-    public function create()
+    public function index()
     {
-        //
+        $query = $this->movies->orderByDesc('id');
+        return new MovieCollection($query->paginate(10));
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MovieRequest $request)
     {
-        //
+        $validated = $request->validated();
+        /**
+         * @var Movie $movie
+         */
+        $movie = $this->movies->create(collect($validated)->except(['image'])->toArray());
+        $movieImage = [];
+        /**
+         * @var UploadedFile $uploadImage
+         */
+        foreach ($validated['image'] as $uploadImage){
+            $filename = sprintf("%s.%s",uniqid(),$uploadImage->getClientOriginalExtension());
+            $uploadImage->move(storage_path("app/images"), $filename);
+            $movieImage[] = new MovieImage([
+                'path' => "images/".$filename
+            ]);
+        }
+        $movie->images()->saveMany($movieImage);
+
+        return new \App\Http\Resources\Movie($movie);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-        //
+        return new \App\Http\Resources\Movie($this->movies->find($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+
+    public function update(MovieRequest $request, $id)
     {
-        //
+        $movie = $this->movies->findOrFail($id);
+        $validated = $request->validated();
+        $movie->update($validated);
+        return new \App\Http\Resources\Movie($movie);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $this->movies->without("images")->findOrFail($id)->delete();
+
     }
 }
