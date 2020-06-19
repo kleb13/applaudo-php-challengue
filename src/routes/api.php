@@ -32,6 +32,14 @@ $router
             $router->post('login','AuthController@login');
         });
 
+        $router->group([
+            'prefix' => 'admin',
+            'namespace'=>'Admin'
+        ],function(Router $router){
+            $router->resource("movies","MovieController",[
+                "only" => ["index","store","update","detail","show"]
+            ])->middleware("role:admin");
+        });
     });
 
 /*Route::group([
