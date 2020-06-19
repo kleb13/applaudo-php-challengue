@@ -37,7 +37,7 @@ $router
             'namespace'=>'Admin'
         ],function(Router $router){
             $router->resource("movies","MovieController",[
-                "only" => ["index","store","update","detail","show"]
+                "only" => ["index","store","update","detail","show","destroy"]
             ])->middleware("role:admin");
         });
     });
