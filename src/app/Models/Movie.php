@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string title
  * @property string description
  * @property boolean availability
- * @property float sales_price
- * @property float rent_price
+ * @property float sale_price
+ * @property float rental_price
  */
 class Movie extends Model
 {
