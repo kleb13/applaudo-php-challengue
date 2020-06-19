@@ -60,4 +60,8 @@ class User extends Authenticatable implements JWTSubject
     public function logs(){
         return $this->hasMany(MovieLog::class);
     }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
 }
