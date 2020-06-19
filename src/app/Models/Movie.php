@@ -20,6 +20,8 @@ class Movie extends Model
 
     protected $guarded = [];
 
+    protected $with = ['images'];
+
     public function images()
     {
         return $this->hasMany(MovieImage::class);
