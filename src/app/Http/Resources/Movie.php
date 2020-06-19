@@ -39,7 +39,8 @@ class Movie extends JsonResource
             'sale_price' => $this->sale_price,
             'availability' => $this->when($showAvailability,$this->availability),
             'likes_count'  => $this->likes_count,
-            'images' => MovieImage::collection($this->whenLoaded("images"))
+            'images' => MovieImage::collection($this->whenLoaded("images")),
+            'liked' => $this->liked
         ];
     }
 }
