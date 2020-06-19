@@ -8,6 +8,7 @@ class MovieLog extends Model
 {
     protected $guarded = [];
 
+    public $timestamps = false;
 
     public function movie(){
         return $this->belongsTo(Movie::class);
