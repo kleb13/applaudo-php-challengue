@@ -40,6 +40,13 @@ $router
                 "only" => ["index","store","update","detail","show","destroy"]
             ])->middleware("role:admin");
         });
+
+        $router->post("movies/{movie}/like","LikeController@store")
+            ->middleware('role:user|admin')
+            ->name('movies.like.store');
+        $router->delete("movies/{movie}/like","LikeController@destroy")
+            ->middleware('role:user|admin')
+            ->name('movies.like.destroy');
     });
 
 /*Route::group([
