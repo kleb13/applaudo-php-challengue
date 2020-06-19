@@ -66,5 +66,37 @@ class Movie extends Model
         return !empty($this->likeByCurrentUser);
     }
 
+    public function scopeSearchByTitle(Builder $query,string $term)
+    {
+        if (empty($term)) {
+            return $query;
+        }
 
+        $query->where('title', 'like', "%$term%");
+    }
+
+    public function scopeOrderByPopularity(Builder $query,string $direction ="desc")
+    {
+        $query->orderBy("likes_count",$direction);
+    }
+
+    public function scopeOrderByTitle(Builder $query, string $direction="asc")
+    {
+        $query->orderBy("title",$direction);
+    }
+
+    public function scopeOrder(Builder $query, string $sortBy)
+    {
+        $sort = str_replace('-','',$sortBy);
+        $direction = str_starts_with($sortBy,'-')?"desc":"asc";
+        switch ($sort){
+            case 'popularity':
+                return $this->scopeOrderByPopularity($query,$direction);
+            case 'title':
+                return $this->scopeOrderByTitle($query,$direction);
+            default:
+                return $this->scopeOrderByTitle($query);
+        }
+
+    }
 }
