@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,4 +38,12 @@ class Movie extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function hasBeenLikedByUser($userId)
+    {
+        return $this->likesByUser($userId)->exists();
+    }
+
+    public function likesByUser(int $userId){
+        return $this->likes()->where('user_id', $userId);
+    }
 }
