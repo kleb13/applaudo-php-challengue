@@ -27,4 +27,7 @@ class Movie extends Model
         return $this->hasMany(MovieImage::class);
     }
 
+    public function logs(){
+        return $this->hasMany(MovieLog::class);
+    }
 }
