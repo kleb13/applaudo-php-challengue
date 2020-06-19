@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use http\QueryString;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Movie
@@ -21,9 +24,12 @@ class Movie extends Model
 
     protected $guarded = [];
 
-    protected $with = ['images'];
+    protected $with = ['images','likeByCurrentUser'];
 
     protected $withCount = ['likes'];
+
+    protected $appends = ["liked"];
+
     public function images()
     {
         return $this->hasMany(MovieImage::class);
@@ -46,4 +52,19 @@ class Movie extends Model
     public function likesByUser(int $userId){
         return $this->likes()->where('user_id', $userId);
     }
+
+    public function likeByCurrentUser()
+    {
+        /**
+         * @todo fix this
+         */
+        return $this->hasOne(Like::class)->where('user_id', auth()->user()->id??null);
+    }
+
+    public function getLikedAttribute()
+    {
+        return !empty($this->likeByCurrentUser);
+    }
+
+
 }
