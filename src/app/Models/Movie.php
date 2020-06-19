@@ -22,6 +22,7 @@ class Movie extends Model
 
     protected $with = ['images'];
 
+    protected $withCount = ['likes'];
     public function images()
     {
         return $this->hasMany(MovieImage::class);
