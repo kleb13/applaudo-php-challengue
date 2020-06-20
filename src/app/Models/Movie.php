@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\AvailabilityScope;
+use App\Traits\AvailabilityTrait;
 use Doctrine\DBAL\Query\QueryBuilder;
 use http\QueryString;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Movie extends Model
 {
+    use AvailabilityTrait;
 
     protected $guarded = [];
 
@@ -101,8 +103,4 @@ class Movie extends Model
 
     }
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new AvailabilityScope());
-    }
 }
