@@ -27,4 +27,9 @@ class MovieController extends Controller
         return new MovieCollection($query->paginate(10));
     }
 
+    public function show($id)
+    {
+        return new \App\Http\Resources\Movie($this->movies->find($id));
+    }
+
 }
