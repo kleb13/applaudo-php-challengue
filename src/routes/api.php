@@ -40,7 +40,7 @@ $router
                 "only" => ["index","store","update","detail","show","destroy"]
             ])->middleware("role:admin");
         });
-
+        $router->get("movies","MovieController@index");
         $router->post("movies/{movie}/like","LikeController@store")
             ->middleware('role:user|admin')
             ->name('movies.like.store');
