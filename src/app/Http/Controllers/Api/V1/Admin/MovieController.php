@@ -7,6 +7,7 @@ use App\Http\Requests\MovieRequest;
 use App\Http\Resources\MovieCollection;
 use App\Models\MovieImage;
 use App\Models\Movie;
+use App\Scopes\AvailabilityScope;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -17,7 +18,7 @@ class MovieController extends Controller
 
     public function __construct(Movie $movies)
     {
-        $this->movies = $movies;
+        $this->movies = $movies->withoutGlobalScope(AvailabilityScope::class);
     }
 
     /**
