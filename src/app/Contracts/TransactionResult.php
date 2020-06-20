@@ -4,7 +4,7 @@
 namespace App\Contracts;
 
 
-class TransactionResult
+class TransactionResult implements \JsonSerializable
 {
     /**
      * @var boolean
@@ -40,5 +40,14 @@ class TransactionResult
     public function getMessage() :string
     {
         return $this->message;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return ["message" =>$this->message];
     }
 }
