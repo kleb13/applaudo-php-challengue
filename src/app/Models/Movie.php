@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\AvailabilityScope;
 use Doctrine\DBAL\Query\QueryBuilder;
 use http\QueryString;
 use Illuminate\Database\Eloquent\Builder;
@@ -98,5 +99,10 @@ class Movie extends Model
                 return $this->scopeOrderByTitle($query);
         }
 
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new AvailabilityScope());
     }
 }
