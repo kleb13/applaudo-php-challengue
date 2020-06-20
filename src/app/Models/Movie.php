@@ -51,6 +51,10 @@ class Movie extends Model
         return $this->likes()->where('user_id', $userId);
     }
 
+    public function transactions(){
+        return $this->hasMany(MovieTransaction::class);
+    }
+
     public function likeByCurrentUser()
     {
         /**
