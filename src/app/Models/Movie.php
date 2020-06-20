@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use App\Scopes\AvailabilityScope;
 use App\Traits\AvailabilityTrait;
-use Doctrine\DBAL\Query\QueryBuilder;
-use http\QueryString;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\{Builder,Model};
 
 /**
  * Class Movie
