@@ -8,6 +8,10 @@ class MovieTransaction extends Model
 {
     public $timestamps=false;
 
+    const RENTAL = "rental";
+    const BUY = "buy";
+    const PENALTY = "penalty";
+    protected $guarded = [];
     public function movie()
     {
         return $this->belongsTo(Movie::class);
