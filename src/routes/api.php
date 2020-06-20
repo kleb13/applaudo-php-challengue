@@ -49,6 +49,8 @@ $router
         $router->delete("movies/{movie}/like","LikeController@destroy")
             ->middleware('role:user|admin')
             ->name('movies.like.destroy');
+        $router->post("movies/{movie}/buy","MovieController@buy")
+            ->middleware('auth');
     });
 
 /*Route::group([
