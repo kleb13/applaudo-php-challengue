@@ -26,9 +26,12 @@ class MovieController extends Controller
      *
      * @return MovieCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query = $this->movies->orderByDesc('id');
+        $query = $this->movies
+            ->order($request->get("order_by",""))
+            ->searchByTitle($request->get("search",""))
+            ->filter($request->get("filter"),"");
         return new MovieCollection($query->paginate(10));
     }
 
