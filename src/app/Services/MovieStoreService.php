@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Contracts\MovieStore;
+use App\Contracts\NesTransactionResult;
+use App\Contracts\OkTransanctionResult;
 use App\Contracts\TransactionResult;
 use App\Models\Movie;
 use Illuminate\Database\DatabaseManager as DB;
@@ -26,19 +28,19 @@ class MovieStoreService implements MovieStore
     public function buy(Movie $movie) : TransactionResult
     {
         if($movie->stock <= 0) {
-            return new TransactionResult(false, "Not enough stock");
+            return new NesTransactionResult();
         }
 
-        return new TransactionResult(true,"Ok");
+        return new OkTransanctionResult();
     }
 
     public function rent(Movie $movie): TransactionResult
     {
-        return new TransactionResult(true,"Ok");
+        return new OkTransanctionResult();
     }
 
     public function return(Movie $movie): TransactionResult
     {
-        return new TransactionResult(true,"Ok");
+        return new OkTransanctionResult();
     }
 }
