@@ -6,3 +6,4 @@ WORKDIR /var/www/html
 
 RUN apk add --no-cache $PHPIZE_DEPS && pecl install xdebug-2.6.0
 RUN docker-php-ext-enable xdebug
+RUN apk add npm
