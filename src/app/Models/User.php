@@ -9,7 +9,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject,MustVerifyEmail
 {
     use LaratrustUserTrait;
     use Notifiable;
