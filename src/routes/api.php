@@ -50,7 +50,15 @@ $router
             ->middleware('role:user|admin')
             ->name('movies.like.destroy');
         $router->post("movies/{movie}/buy","MovieController@buy")
-            ->middleware('auth');
+            ->middleware('auth')
+            ->name("movie.buy");
+        $router->post("movies/{movie}/rent","MovieController@rent")
+            ->middleware('auth')
+            ->name("movie.rent");
+
+        $router->post("movies/{movie}/return","MovieController@return")
+            ->middleware('auth')
+            ->name("movie.return");
     });
 
 /*Route::group([

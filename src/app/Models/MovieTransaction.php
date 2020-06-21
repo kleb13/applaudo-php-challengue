@@ -8,7 +8,7 @@ class MovieTransaction extends Model
 {
     public $timestamps=false;
 
-    const RENTAL = "rental";
+    const RENTAL = "rent";
     const BUY = "buy";
     const PENALTY = "penalty";
     protected $guarded = [];

@@ -43,4 +43,22 @@ class MovieController extends Controller
         return (new JsonResponse($result))
             ->setStatusCode($result->wasSuccess()?200:400);
     }
+
+    public function rent($id)
+    {
+        $movie = $this->movies->find($id);
+        $result  = $this->movieStore->rent($movie);
+
+        return (new JsonResponse($result))
+            ->setStatusCode($result->wasSuccess()?200:400);
+    }
+
+    public function return($id)
+    {
+        $movie = $this->movies->find($id);
+        $result  = $this->movieStore->return($movie);
+
+        return (new JsonResponse($result))
+            ->setStatusCode($result->wasSuccess()?200:400);
+    }
 }
