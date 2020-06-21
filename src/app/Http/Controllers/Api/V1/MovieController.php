@@ -6,6 +6,7 @@ use App\Contracts\MovieStore;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use App\Http\Resources\MovieCollection;
+use App\Scopes\AvailabilityScope;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class MovieController extends Controller
 
     public function buy($id)
     {
-        $movie = $this->movies->find($id);
+        $movie = $this->movies->findOrFail($id);
         $result  = $this->movieStore->buy($movie);
 
         return (new JsonResponse($result))
@@ -46,7 +47,7 @@ class MovieController extends Controller
 
     public function rent($id)
     {
-        $movie = $this->movies->find($id);
+        $movie = $this->movies->findOrFail($id);
         $result  = $this->movieStore->rent($movie);
 
         return (new JsonResponse($result))
@@ -55,7 +56,7 @@ class MovieController extends Controller
 
     public function return($id)
     {
-        $movie = $this->movies->find($id);
+        $movie = $this->movies->withoutGlobalScope(AvailabilityScope::class)->findOrFail($id);
         $result  = $this->movieStore->return($movie);
 
         return (new JsonResponse($result))
