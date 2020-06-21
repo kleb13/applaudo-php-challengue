@@ -6,3 +6,4 @@ php artisan db:seed --class=UserTableSeeder
 php artisan db:seed --class=MovieSeeder
 npm run development
 php artisan app:create-admin
+php artisan storage:link
