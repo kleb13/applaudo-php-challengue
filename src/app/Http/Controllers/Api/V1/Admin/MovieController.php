@@ -66,7 +66,7 @@ class MovieController extends Controller
 
     public function show($id)
     {
-        return new \App\Http\Resources\Movie($this->movies->find($id));
+        return new \App\Http\Resources\Movie($this->movies->findOrFail($id));
     }
 
 
