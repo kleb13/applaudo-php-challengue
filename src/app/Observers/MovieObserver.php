@@ -6,10 +6,20 @@ use App\Models\Movie;
 use App\Models\MovieLog;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
+/**
+ * Class MovieObserver
+ * @package App\Observers
+ */
 class MovieObserver
 {
 
+    /**
+     * @var Auth
+     */
     protected $auth;
+    /**
+     * @var MovieLog
+     */
     protected $logs;
     public function __construct(Auth $auth,MovieLog $logs)
     {
@@ -20,6 +30,9 @@ class MovieObserver
     /**
      * Handle the movie "updated" event.
      *
+     * if a the title,sale price or rental price of a movie was updated
+     * It will create an log for each field modified
+     * will store the old value and the new value
      * @param  \App\Models\Movie  $movie
      * @return void
      */
