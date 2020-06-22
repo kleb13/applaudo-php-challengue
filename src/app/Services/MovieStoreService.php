@@ -11,11 +11,26 @@ use App\Contracts\{MovieStore,NesTransactionResult,OkTransanctionResult,Transact
 use App\Models\{Movie, MovieTransaction, Rental};
 use Illuminate\Database\DatabaseManager as DB;
 
+/**
+ * Class MovieStoreService
+ * @package App\Services
+ */
 class MovieStoreService implements MovieStore
 {
+    /**
+     * @var DB
+     */
     protected $db;
+    /**
+     * @var Auth
+     */
     protected $auth;
 
+    /**
+     * MovieStoreService constructor.
+     * @param DB $db
+     * @param Auth $auth
+     */
     public function __construct(DB $db, Auth $auth)
     {
         $this->db = $db;
@@ -23,6 +38,9 @@ class MovieStoreService implements MovieStore
     }
 
     /**
+     * Add a log transaction with for the movie with the reason o buy
+     * reduce the stock by 1 if it is the last movie change the availability to false
+     * If there is not stock will return a NesTransactionResult
      * @param Movie $movie
      * @return TransactionResult
      * @throws \Throwable
@@ -46,6 +64,10 @@ class MovieStoreService implements MovieStore
     }
 
     /**
+     * It creates the log transaction for the rental
+     * and creates the rental with the expected return date
+     *if the user already has an rental pending for this movie
+     *won't allow him to create a new one
      * @param Movie $movie
      * @return TransactionResult
      * @throws \Throwable
@@ -84,6 +106,10 @@ class MovieStoreService implements MovieStore
     }
 
     /**
+     * This method add new log transaction with the purpose of rental
+     * but could add another with reason of penalty if the user return
+     * the movie late.
+     * If a movie has stock 0 and a User return it will mark the availability as true
      * @param Movie $movie
      * @return TransactionResult
      * @throws \Throwable
@@ -130,6 +156,11 @@ class MovieStoreService implements MovieStore
         }
     }
 
+    /**
+     * @param Movie $movie
+     * @param string $reason
+     * @param float $amount
+     */
     protected function validateAndCreateTransaction(Movie $movie, string $reason, float $amount)
     {
         $movie->stock -= 1;

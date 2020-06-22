@@ -7,6 +7,11 @@ namespace App\Traits;
 use App\Scopes\AvailabilityScope;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * This trait is aimed to create scope for filtering
+ * Trait AvailabilityTrait
+ * @package App\Traits
+ */
 trait AvailabilityTrait
 {
 
