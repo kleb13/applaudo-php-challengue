@@ -1,0 +1,703 @@
+{
+	"info": {
+		"_postman_id": "e9ba7c72-03a2-4041-a421-c907abe3c0dd",
+		"name": "ApplaudoChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Movies",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/admin/movies?page=1&filter=available&search=Neque",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"movies"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "filter",
+									"value": "available"
+								},
+								{
+									"key": "search",
+									"value": "Neque"
+								}
+							]
+						},
+						"description": "Get the movies availabe and unavailable, but you can filter by:\r\n\r\n- availabe\r\n- unavailable\r\n\r\nYou can search by movie title with the field `search`.\r\nAnd paginate with the field `page`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get movie detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/admin/movies/39",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"movies",
+								"39"
+							]
+						},
+						"description": "Get the detail for a specific movie\r\n\r\nReturn 404 if the movie does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "save movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ab646d81-3e68-41e4-ba7b-4684bc018bde",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "stock",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sale_price",
+									"value": "38.39",
+									"type": "text"
+								},
+								{
+									"key": "rental_price",
+									"value": "6.22",
+									"type": "text"
+								},
+								{
+									"key": "availability",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Eligendi magni numquam recusandae quia. Consequatur voluptatibus voluptas impedit. Animi error officia eum et laudantium ut dolorem et. Quod iusto quia cum beatae quas delectus.",
+									"type": "text"
+								},
+								{
+									"key": "image[]",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "image[]",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admin/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"movies"
+							]
+						},
+						"description": "Create a movie, expects at least one image"
+					},
+					"response": []
+				},
+				{
+					"name": "update movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f546d9d5-b486-45ca-b49c-d4458f29d3f5",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"stock\":25,\r\n\"sale_price\":38.353,\r\n\"rental_price\":6.23,\r\n\"availability\":1,\r\n\"title\":\"Eaque .1551asasASAA22\",\r\n\"description\":\"Eligendi magni numquam recusandae quia. Consequatur voluptatibus voluptas impedit. Animi error officia eum et laudantium ut dolorem et. Quod iusto quia cum beatae quas delectus.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admin/movies/48",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"movies",
+								"48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "be8fffb1-4949-415a-bcd0-5d524482e9c3",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/admin/movies/49",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"movies",
+								"49"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User logged in",
+			"item": [
+				{
+					"name": "return movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7d17f9c1-f9d2-4cb2-b345-2cd5099c1f8f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/movies/39/return",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"39",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rent movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "99362f5b-ea27-4b8c-ae47-226d5b92d83d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/movies/39/rent",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"39",
+								"rent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add like to movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ef42cd6b-72db-4005-98f5-56af34a672a7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/movies/39/like",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"39",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove like to movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "827abd6e-06c5-4e59-b6d6-bc83661c4195",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/movies/39/like",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"39",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buy movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3808b36c-ea17-4325-bbdb-6cd772f23bf6",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/movies/39/buy",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"39",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c3a7171-2090-4f16-a93e-da6ec0becb49",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"auth_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"app@moviestore.com\",\n\"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/auth/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user and anonymous get movies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/movies?page=1&order_by=-popularity",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "order_by",
+							"value": "-popularity"
+						}
+					]
+				},
+				"description": "you can sort by:\r\n- -popularity\r\n- popularity\r\n- title\r\n- -title"
+			},
+			"response": []
+		},
+		{
+			"name": "user and anonymous get movie detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/movies/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"movies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
