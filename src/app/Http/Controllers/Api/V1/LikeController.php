@@ -33,7 +33,8 @@ class LikeController extends Controller
             ]))->response()->setStatusCode(400);
         }
         $movie->likes()->save(new Like([
-            'user_id' =>$this->auth->user()->id
+            'user_id' =>$this->auth->user()->id,
+            'created_at' => now()
         ]));
     }
 
