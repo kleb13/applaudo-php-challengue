@@ -54,7 +54,7 @@ class CreateAdmin extends Command
          if($input->fails()){
             $this->error($input->errors()->toJson());
 
-            return;
+            return 1;
          }
 
         $user = $users->create([
