@@ -78,3 +78,9 @@ in the container:
 ```
 # chown mysql:mysql -R /var/lib/mysql/laravel/
 ```
+
+### Running the test
+
+```
+$ docker-compose exec php vendor/bin/phpunit
+```
