@@ -8,6 +8,7 @@ use App\Http\Resources\MovieCollection;
 use App\Models\MovieImage;
 use App\Models\Movie;
 use App\Scopes\AvailabilityScope;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -84,5 +85,6 @@ class MovieController extends Controller
     {
         $this->movies->without("images")->findOrFail($id)->delete();
 
+        return (new JsonResponse())->setStatusCode(204);
     }
 }
