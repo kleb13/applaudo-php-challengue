@@ -42,7 +42,8 @@ class MovieObserver
                     'new_value' => $movie->{$field},
                     'field' => $field,
                     'user_id' => $user->id,
-                    'movie_id' => $movie->id
+                    'movie_id' => $movie->id,
+                    'created_at' => now()
                 ];
 
             })->toArray();
