@@ -47,7 +47,7 @@ class MovieController extends Controller
 
     public function rent($id)
     {
-        $movie = $this->movies->findOrFail($id);
+        $movie = $this->movies->withoutGlobalScope(AvailabilityScope::class)->findOrFail($id);
         $result  = $this->movieStore->rent($movie);
 
         return (new JsonResponse($result))

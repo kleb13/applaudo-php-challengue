@@ -48,6 +48,6 @@ class TransactionResult implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return ["message" =>$this->message];
+        return ["message" =>$this->getMessage()];
     }
 }

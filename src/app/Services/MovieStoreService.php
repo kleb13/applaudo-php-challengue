@@ -70,6 +70,7 @@ class MovieStoreService implements MovieStore
 
             $movie->rentals()->save(new Rental([
                 'user_id' => $this->auth->guard()->id(),
+                'created_at' => now(),
                 'expected_return_date' => Carbon::now()->addWeeks(2) // @todo make this configurable
             ]));
 
@@ -114,7 +115,8 @@ class MovieStoreService implements MovieStore
                 $movie->transactions()->save(new MovieTransaction([
                     "reason" => MovieTransaction::PENALTY,
                     "amount" => 5, // @todo make this configurable
-                    "user_id" => $this->auth->guard()->id()
+                    "user_id" => $this->auth->guard()->id(),
+                    "created_at" => now()
                 ]));
                 $result = new TransactionResult(true,"You were penalized for late return");
             }
@@ -138,7 +140,8 @@ class MovieStoreService implements MovieStore
         $movie->transactions()->save(new MovieTransaction([
             "reason" => $reason,
             "amount" => $amount,
-            "user_id" => $this->auth->guard()->id()
+            "user_id" => $this->auth->guard()->id(),
+            "created_at" => now()
         ]));
     }
 }
