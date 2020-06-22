@@ -7,6 +7,11 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Command aimed to create admin user from the console
+ * Class CreateAdmin
+ * @package App\Console\Commands
+ */
 class CreateAdmin extends Command
 {
     /**
