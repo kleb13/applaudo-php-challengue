@@ -123,11 +123,32 @@ class AdminMovieControllerTest extends TestCase
                 'sale_price' =>$movie->sale_price,
                 'rental_price' => $movie->rental_price,
                 'availability' => true,
-                'title' => 'my title',
+                'title' => $movie->title,
                 'description' => 'description'
             ]);
         $response->assertJsonFragment([
             'description' => 'description'
         ]);
+    }
+
+    public function testAsAdminICanCreateAMovie()
+    {
+        $response = $this->actingAs(static::$admin)
+            ->withHeader('Accept','application/json')
+            ->post('/api/v1/admin/movies/',[
+                'stock' => 1,
+                'sale_price' =>12.2,
+                'image' => [UploadedFile::fake()->image('avatar.png')],
+                'rental_price' => 12.3,
+                'availability' => true,
+                'title' => "my title",
+                'description' => 'description'
+            ]);
+        $response->assertCreated();
+        $response->assertJsonFragment([
+            'description' => 'description',
+            'title' => 'my title'
+        ]);
+
     }
 }
