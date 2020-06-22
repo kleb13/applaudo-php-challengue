@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Movie;
+use App\Models\MovieLog;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -150,5 +151,24 @@ class AdminMovieControllerTest extends TestCase
             'title' => 'my title'
         ]);
 
+    }
+
+    public function testAsAdminICanUpdateTheTitleMovieAndALogWillBeCreated()
+    {
+        $movie = factory(Movie::class)->create();
+        $response = $this->actingAs(static::$admin)
+            ->withHeader('Accept','application/json')
+            ->put('/api/v1/admin/movies/'.$movie->id,[
+                'stock' => $movie->stock,
+                'sale_price' =>$movie->sale_price,
+                'rental_price' => $movie->rental_price,
+                'availability' => true,
+                'title' => "My Title",
+                'description' => 'description'
+            ]);
+
+        $logs = MovieLog::all();
+        $this->assertEquals($logs->count(),1);
+        $this->assertEquals($logs->first()->field,'title');
     }
 }
