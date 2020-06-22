@@ -15,3 +15,11 @@ $factory->define(Movie::class, function (Faker $faker) {
     "rental_price" => $faker->randomFloat(2,5,15)
     ];
 });
+
+$factory->state(Movie::class,'available',[
+    'availability' => true
+]);
+
+$factory->state(Movie::class,'unavailable',[
+    'availability' => false
+]);
