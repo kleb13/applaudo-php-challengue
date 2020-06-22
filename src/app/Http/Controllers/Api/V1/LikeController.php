@@ -10,17 +10,38 @@ use \Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class LikeController
+ * @package App\Http\Controllers\Api\V1
+ */
 class LikeController extends Controller
 {
+    /**
+     * @var Movie
+     */
     protected  $movies;
+    /**
+     * @var Auth
+     */
     protected $auth;
 
+    /**
+     * LikeController constructor.
+     * @param Movie $movies
+     * @param Auth $auth
+     */
     public function __construct(Movie $movies, Auth $auth)
     {
         $this->movies = $movies;
         $this->auth = $auth;
     }
 
+    /**
+     * Create a like for a movie
+     * If already liked it returns 400
+     * @param $movieId
+     * @return JsonResponse|object
+     */
     public function store($movieId)
     {
         /**
@@ -38,6 +59,11 @@ class LikeController extends Controller
         ]));
     }
 
+    /**
+     * Remove a like for a movie
+     * @param $movieId
+     * @return JsonResponse|object
+     */
     public function destroy($movieId)
     {
         /**

@@ -24,7 +24,11 @@ class AuthController extends Controller
         $this->auth = $auth;
     }
 
-
+    /**
+     * Return the json web token
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
     public function login(LoginRequest $request){
 
         $credentials = $request->validated();
