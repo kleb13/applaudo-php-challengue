@@ -12,6 +12,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class MovieController
+ * Only users with admin access can have perform this actions
+ * @package App\Http\Controllers\Api\V1\Admin
+ */
 class MovieController extends Controller
 {
 
@@ -19,11 +24,16 @@ class MovieController extends Controller
 
     public function __construct(Movie $movies)
     {
+        // Remove Availability scope for the admin, needs to see every movie despite its availability
         $this->movies = $movies->withoutGlobalScope(AvailabilityScope::class);
     }
 
     /**
-     * Display a listing of the resource.
+     * Get the movies availabe and unavailable, but you can filter by:
+     * - availabe
+     * - unavailable
+     * You can search by movie title with the field search.
+     * And paginate with the field page
      *
      * @return MovieCollection
      */
@@ -38,8 +48,10 @@ class MovieController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Create a movie expects at least one image
      *
+     * @param MovieRequest $request
+     * @return \App\Http\Resources\Movie
      */
     public function store(MovieRequest $request)
     {
@@ -65,13 +77,25 @@ class MovieController extends Controller
     }
 
 
+    /**
+     * Get the detail for a specific movie
+     * return http status code 404 if the movie does not exist
+     * @param $id
+     * @return \App\Http\Resources\Movie
+     */
     public function show($id)
     {
         return new \App\Http\Resources\Movie($this->movies->findOrFail($id));
     }
 
 
-
+    /**
+     * Update a movie
+     * Return 404 if the movie does not exists
+     * @param MovieRequest $request
+     * @param $id
+     * @return \App\Http\Resources\Movie
+     */
     public function update(MovieRequest $request, $id)
     {
         $movie = $this->movies->findOrFail($id);
@@ -80,7 +104,11 @@ class MovieController extends Controller
         return new \App\Http\Resources\Movie($movie);
     }
 
-
+    /**
+     * Delete a movie
+     * @param $id
+     * @return JsonResponse
+     */
     public function destroy($id)
     {
         $this->movies->without("images")->findOrFail($id)->delete();
